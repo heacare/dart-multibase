@@ -1,0 +1,72 @@
+name: checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dart: ['2.17.6']
+    steps:
+      - uses: actions/cache@v3
+        with:
+          path: ${{ runner.tool_cache }}/dart-sdk
+          key: ${{ runner.os }}-dart-sdk-${{ matrix.dart }}
+      - uses: heacare/setup-dart@add-matcher
+        with:
+          sdk: ${{ matrix.dart }}
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: ${{ env.PUB_CACHE }}
+          key: ${{ runner.os }}-dart-pub-cache-${{ hashFiles('**/pubspec.yaml')}}
+      - run: dart pub get
+      - run: dart analyze . | sed 's/^   info/warning/g'
+
+  format:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dart: ['2.17.6']
+    steps:
+      - uses: actions/cache@v3
+        with:
+          path: ${{ runner.tool_cache }}/dart-sdk
+          key: ${{ runner.os }}-dart-sdk-${{ matrix.dart }}
+      - uses: heacare/setup-dart@add-matcher
+        with:
+          sdk: ${{ matrix.dart }}
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: ${{ env.PUB_CACHE }}
+          key: ${{ runner.os }}-dart-pub-cache-${{ hashFiles('**/pubspec.yaml')}}
+      - run: dart pub get
+      - run: dart format . --output none --set-exit-if-changed
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dart: ['2.17.6']
+    steps:
+      - uses: actions/cache@v3
+        with:
+          path: ${{ runner.tool_cache }}/dart-sdk
+          key: ${{ runner.os }}-dart-sdk-${{ matrix.dart }}
+      - uses: heacare/setup-dart@add-matcher
+        with:
+          sdk: ${{ matrix.dart }}
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: ${{ env.PUB_CACHE }}
+          key: ${{ runner.os }}-dart-pub-cache-${{ hashFiles('**/pubspec.yaml')}}
+      - run: dart pub get
+      - run: dart test . --reporter expanded --coverage
+
+# vim: set et ts=2 sw=2:
