@@ -63,6 +63,7 @@ enum Multibase {
   /// rfc4648 with padding
   base64urlpad(code: 'U', symbols: _base64UrlSymbols, padding: '=');
 
+  /// Initialize a new multibase variant
   const Multibase({
     required final String code,
     required final String symbols,
@@ -106,6 +107,7 @@ enum Multibase {
     );
     try {
       return c.decode(mappedData);
+      // ignore: avoid_catching_errors
     } on ArgumentError catch (e) {
       throw FormatException('Input is not valid data: $e');
     }
@@ -136,6 +138,7 @@ Uint8List multibaseDecode(final String data) {
 
 /// Encoder for Multibase encoded data
 class MultibaseEncoder extends Converter<Uint8List, String> {
+  /// Construct a new encoder for the given base
   MultibaseEncoder(final Multibase base) : _base = base;
 
   final Multibase _base;
@@ -152,6 +155,7 @@ class MultibaseDecoder extends Converter<String, Uint8List> {
 
 /// A multibase encoder and decoder
 class MultibaseCodec extends Codec<Uint8List, String> {
+  /// Construct a new encoder for the given base and a generic decoder
   MultibaseCodec({required final Multibase encodeBase})
       : encoder = MultibaseEncoder(encodeBase);
 
