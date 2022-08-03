@@ -67,6 +67,6 @@ jobs:
           path: ${{ env.PUB_CACHE }}
           key: ${{ runner.os }}-dart-pub-cache-${{ hashFiles('**/pubspec.yaml')}}
       - run: dart pub get
-      - run: dart test . --reporter expanded --coverage
+      - run: dart test .
 
 # vim: set et ts=2 sw=2:
