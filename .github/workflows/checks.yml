@@ -12,7 +12,7 @@ jobs:
       matrix:
         dart: ['2.17.6']
     steps:
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ${{ runner.tool_cache }}/dart-sdk
           key: ${{ runner.os }}-dart-sdk-${{ matrix.dart }}
@@ -20,7 +20,7 @@ jobs:
         with:
           sdk: ${{ matrix.dart }}
       - uses: actions/checkout@v4
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ${{ env.PUB_CACHE }}
           key: ${{ runner.os }}-dart-pub-cache-${{ hashFiles('**/pubspec.yaml')}}
@@ -33,7 +33,7 @@ jobs:
       matrix:
         dart: ['2.17.6']
     steps:
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ${{ runner.tool_cache }}/dart-sdk
           key: ${{ runner.os }}-dart-sdk-${{ matrix.dart }}
@@ -41,7 +41,7 @@ jobs:
         with:
           sdk: ${{ matrix.dart }}
       - uses: actions/checkout@v4
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ${{ env.PUB_CACHE }}
           key: ${{ runner.os }}-dart-pub-cache-${{ hashFiles('**/pubspec.yaml')}}
@@ -54,7 +54,7 @@ jobs:
       matrix:
         dart: ['2.17.6']
     steps:
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ${{ runner.tool_cache }}/dart-sdk
           key: ${{ runner.os }}-dart-sdk-${{ matrix.dart }}
@@ -62,7 +62,7 @@ jobs:
         with:
           sdk: ${{ matrix.dart }}
       - uses: actions/checkout@v4
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ${{ env.PUB_CACHE }}
           key: ${{ runner.os }}-dart-pub-cache-${{ hashFiles('**/pubspec.yaml')}}
